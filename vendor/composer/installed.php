@@ -1,15 +1,24 @@
 <?php return array(
     'root' => array(
-        'name' => 'zdravservice/rac-worker',
-        'pretty_version' => '1.0.0',
-        'version' => '1.0.0.0',
-        'reference' => null,
+        'name' => 'timurikvx/rac-worker',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => 'fcd7217351c511d98a787892565e362c66c82f2f',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
+        'symfony/deprecation-contracts' => array(
+            'pretty_version' => 'v3.6.0',
+            'version' => '3.6.0.0',
+            'reference' => '63afe740e99a13ba87ec199bb07bbdee937a5b62',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../symfony/deprecation-contracts',
+            'aliases' => array(),
+            'dev_requirement' => true,
+        ),
         'symfony/polyfill-mbstring' => array(
             'pretty_version' => 'v1.32.0',
             'version' => '1.32.0.0',
@@ -20,9 +29,9 @@
             'dev_requirement' => true,
         ),
         'symfony/var-dumper' => array(
-            'pretty_version' => 'v6.0.19',
-            'version' => '6.0.19.0',
-            'reference' => 'eb980457fa6899840fe1687e8627a03a7d8a3d52',
+            'pretty_version' => 'v6.4.23',
+            'version' => '6.4.23.0',
+            'reference' => 'd55b1834cdbfcc31bc2cd7e095ba5ed9a88f6600',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/var-dumper',
             'aliases' => array(),
@@ -37,10 +46,10 @@
             'aliases' => array(),
             'dev_requirement' => true,
         ),
-        'zdravservice/rac-worker' => array(
-            'pretty_version' => '1.0.0',
-            'version' => '1.0.0.0',
-            'reference' => null,
+        'timurikvx/rac-worker' => array(
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => 'fcd7217351c511d98a787892565e362c66c82f2f',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
