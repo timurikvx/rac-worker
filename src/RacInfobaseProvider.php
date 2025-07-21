@@ -40,9 +40,9 @@ class RacInfobaseProvider
         return null;
     }
 
-    public function first(ClusterEntity $cluster): InfobaseShortEntity|null
+    public function first(ClusterEntity $cluster, &$error = ''): InfobaseShortEntity|null
     {
-        $list = $this->list($cluster);
+        $list = $this->list($cluster,$error);
         if(count($list) > 0){
             return $list[0];
         }
