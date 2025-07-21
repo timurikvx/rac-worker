@@ -1,0 +1,21 @@
+{
+    "name": "zdravservice/rac-worker",
+    "type": "library",
+    "version": "1.0.0",
+    "autoload": {
+        "psr-4": {
+            "RacWorker\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Гайфуллин Тимур",
+            "email": "gayfulin_t@zdravservice.ru"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require-dev": {
+        "tightenco/collect": "^9.52"
+    }
+}
