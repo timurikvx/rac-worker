@@ -16,7 +16,7 @@
             "email": "gayfulin_t@zdravservice.ru"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true,
     "require-dev": {
         "tightenco/collect": "^9.52"
