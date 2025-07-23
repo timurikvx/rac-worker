@@ -103,6 +103,16 @@ class ServerEntity
         $this->portMax = intval($ports[1]);
     }
 
+    public function setPortMin(int $portMin): void
+    {
+        $this->portMin = $portMin;
+    }
+
+    public function setPortMax(int $portMax): void
+    {
+        $this->portMax = $portMax;
+    }
+
     public function getPortMin(): int
     {
         return $this->portMin;

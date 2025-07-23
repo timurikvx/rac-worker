@@ -2,7 +2,7 @@
 
 Библиотека обертка для работы с компонентами RAS/RAC для платформы 1С Предприятие 8
 
-С помощью нее можно работа с:
+С помощью нее можно взаимодействовать с:
 
  - Администраторами
  - Кластерами
@@ -12,13 +12,13 @@
  - Сеансами
 
 ## Установка
-* * *
+
 Для установки используйте команду
 
 `` composer require timurikvx/rac-worker ``
 
 ## Использование
-* * *
+
 ### Для авторизации при работе с RAC используются классы
 
 #### Основной aдминистратор
@@ -37,7 +37,7 @@ $clusterUser = new ClusterUser('name', 'password');
 $infobaseUser = new InfobaseUser('name', 'password');
 ```
 ## Основной класс RacWorker 
-* * *
+
 ```php
 $version = '8.3.23.2137'; //Версия 1С платформы
 $worker = new RacWorker($version, 'localhost', 1545, RacArchitecture::X86_64);
@@ -47,8 +47,31 @@ $worker = new RacWorker($version, 'localhost', 1545, RacArchitecture::X86_64);
 RacArchitecture::X86_64
 RacArchitecture::X64
 ```
+## Работа с основными администраторами
+
+### Список администраторов
+```php
+$error = '';
+$agents = $worker->agent->list($clusterAgent, $error); //array<AgentEntity::class>
+```
+### Добавление администратора
+```php
+$error = '';
+$agent = AgentEntity::create('Timmy', 'при оываыва ываываыв аыва');
+$agent->setPassword('password');
+$agent->setOsAuth('\\\\MACHINE\\UserName');
+$worker->agent->add($agent, $clusterAgent, $error);
+```
+где ``$clusterAgent`` - уже существующий администратор, если он есть
+
+### Удаление администратора
+```php
+$error = '';
+$worker->agent->remove($agent, $clusterAgent, $error);
+```
+
 ## Работа с Кластерами
-* * *
+
 ### Список кластеров
 ```php
 $clusters = $worker->cluster->list(); //array<ClusterEntity::class>
@@ -94,8 +117,34 @@ $worker->cluster->update($cluster, $error); //bool
 $error = '';
 $worker->cluster->remove($cluster, $error); //bool
 ```
+
+## Работа с администратором кластера
+
+Это администраторы относящиеся к тому кластеру в который они добавлены, а основные администраторы защищают все кластера
+
+### Список администраторов кластера
+```php
+$error = '';
+$list = $worker->cluster->adminList($cluster, $error); //array<ClusterAdminEntity::class>
+```
+### Добавление администратора кластера
+```php
+$error = '';
+$admin = ClusterAdminEntity::create('Имя администратора', 'Описание');
+$admin->setPassword('пароль');
+$admin->setOsAuth('имя пользователя ОС'); // для примера \\COMP\User1
+$worker->cluster->adminAdd($cluster, $admin, $error);
+```
+где ``setOsAuth`` - установка авторизации ОС, в этом случае пароль передавать на нужно
+
+### Удаление администратора кластера
+```php
+$error = '';
+$worker->cluster->adminRemove($cluster, $admin, $error);
+```
+где ``$admin`` - сущность ClusterAdminEntity::class
+
 ## Работа с Базами данных
-* * *
 
 ### Список баз данных кластера
 ```php
@@ -134,8 +183,7 @@ $infobase->setDeniedMessage('message');//Собщение пользовател
 $infobase->setDeniedParameter(''); //Параметр блокировки
 $worker->infobase->update($cluster, $infobase, $error); //bool
 ```
-## Рабочие сервера кластера
-* * *
+## Рабочие серверы кластера
 
 ### Список серверов кластера
 ```php
@@ -156,6 +204,9 @@ $infobase = $worker->infobase->first($cluster, $error); //ServerEntity::class|nu
 ```php
 $error = '';
 $server = ServerEntity::create('Имя сервера', 'localhost', 1600);
+$server->setInfobasesLimit(16);
+$server->setPortMin(1600);
+$server->setPortMax(1700);
 $worker->server->add($cluster, $server, $error);
 ```
 ### Изменение сервера
@@ -171,7 +222,7 @@ $server->setTemporaryAllowedTotalMemoryTimeLimit(300000);
 $worker->server->update($cluster, $server, $error);
 ```
 ***
-*Будьте аккуратны при измененении параметров сервера - это может привести к его неработоспособности!*
+*Будьте аккуратны при изменении параметров сервера - это может привести к его неработоспособности!*
 ***
 ### Удаление сервера
 ```php
@@ -179,8 +230,8 @@ $error = '';
 $worker->server->remove($cluster, $server, $error);
 ```
 
-## Рабочие процессы кластера
-* * *
+## Управление рабочими процессами кластера
+
 ### Список процессов
 ```php
 $error = '';
@@ -188,7 +239,7 @@ $processes = $worker->process->list($cluster, $server, $error); //array<ProcessE
 ```
 
 ## Соединения с кластером
-* * *
+
 ### Список соединений
 ```php
 $error = '';
