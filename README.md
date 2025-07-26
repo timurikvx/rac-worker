@@ -21,7 +21,7 @@
 
 ### Для авторизации при работе с RAC используются классы
 
-#### Основной aдминистратор
+#### Администратор сервера
 
 ```php
 $clusterAgent = new ClusterAgent('name', 'password');
@@ -47,7 +47,7 @@ $worker = new RacWorker($version, 'localhost', 1545, RacArchitecture::X86_64);
 RacArchitecture::X86_64
 RacArchitecture::X64
 ```
-## Работа с основными администраторами
+## Работа с администраторами сервера
 
 ### Список администраторов
 ```php
@@ -193,12 +193,12 @@ $servers = $worker->server->list($cluster, $error); //array<ServerEntity::class>
 ### Сервер по имени
 ```php
 $error = '';
-$infobase = $worker->infobase->getByName("Имя сервера", $cluster, $error); //ServerEntity::class|null
+$infobase = $worker->server->getByName("Имя сервера", $cluster, $error); //ServerEntity::class|null
 ```
 ### Первый сервер
 ```php
 $error = '';
-$infobase = $worker->infobase->first($cluster, $error); //ServerEntity::class|null
+$infobase = $worker->server->first($cluster, $error); //ServerEntity::class|null
 ```
 ### Добавление сервера
 ```php
@@ -268,5 +268,37 @@ $connections = $worker->connection->getByUser('Имя пользователя',
 $error = '';
 foreach ($list as $connection) {
      $worker->connection->remove($cluster, $process, $connection, $infobase->getInfobaseUser(), $error);
+}
+```
+
+==========================
+
+## Сеансы баз данных
+
+### Полный список сеансов
+```php
+$error = '';
+$sessions = $worker->session->list($cluster, $infobase, $error); //array<SessionEntity::class>
+```
+### Сеансы по имени пользователя
+```php
+$error = '';
+$sessions = $worker->infobase->getByUser("Имя сервера", $cluster, $error); //array<SessionEntity::class>
+```
+### Сеансы по имени хоста
+```php
+$error = '';
+$sessions = $worker->infobase->getByHost("Имя сервера", $cluster, $error); //array<SessionEntity::class>
+```
+### Сеансы по типу приложения
+```php
+$error = '';
+$sessions = $worker->infobase->getByAppID("Имя сервера", $cluster, $error); //array<SessionEntity::class>
+```
+### Удаление сеансов с базой данных
+```php
+$error = '';
+foreach ($sessions as $session){
+     $worker->session->remove($cluster, $session, 'Сообщение пользователя', $error);
 }
 ```
