@@ -26,7 +26,7 @@ class RacConnectionProvider implements RacConnectionProviderInterface
         $output = $this->provider->execute($command, $error);
         $properties = $this->connectionProperties();
         $array = $this->provider->handle($output, $properties);
-        return ClassFiller::list(ConnectionEntity::class, $array);
+        return ClassFiller::list(ConnectionEntity::class, $array, ['provider'=>$this->provider, 'cluster'=>$cluster,'process'=>$process, 'infobase'=>$infobase]);
     }
 
     public function getByAppID(string $appID, ClusterEntity $cluster, ProcessEntity $process, InfobaseShortEntity $infobase, &$error = ''): array

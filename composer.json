@@ -1,6 +1,6 @@
 {
     "name": "timurikvx/rac-worker",
-    "description": "Библиботека обертка для работы с компонентой RAS/RAC для 1С:Предприятия 8",
+    "description": "Библиотека обертка для работы с компонентой RAS/RAC для 1С:Предприятия 8",
     "type": "library",
     "autoload": {
         "psr-4": {
