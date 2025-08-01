@@ -267,7 +267,9 @@ $connections = $worker->connection->getByUser('Имя пользователя',
 ```php
 $error = '';
 foreach ($list as $connection) {
-     $worker->connection->remove($cluster, $process, $connection, $infobase->getInfobaseUser(), $error);
+    $connection->remove($error);
+    //или
+    $worker->connection->remove($cluster, $process, $connection, $infobase->getInfobaseUser(), $error);
 }
 ```
 
@@ -297,6 +299,8 @@ $sessions = $worker->infobase->getByAppID("Имя сервера", $cluster, $er
 ```php
 $error = '';
 foreach ($sessions as $session){
-     $worker->session->remove($cluster, $session, 'Сообщение пользователя', $error);
+    $session->remove('Сообщение пользователя', $error);
+    //или
+    $worker->session->remove($cluster, $session, 'Сообщение пользователя', $error);
 }
 ```
