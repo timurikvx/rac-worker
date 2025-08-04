@@ -22,7 +22,8 @@ class Command
         $output = '';
         $error = '';
         if($os == 'Linux'){
-            return shell_exec('LC_ALL=en_US.UTF-8 ' . $command);
+            $output = shell_exec('LC_ALL=en_US.UTF-8 ' . $command);
+            return explode("\n", $output);
         }else{
             $descriptors = [
                 ['pipe', 'r'],
