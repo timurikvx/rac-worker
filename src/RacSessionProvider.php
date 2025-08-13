@@ -24,7 +24,7 @@ class RacSessionProvider
         $output = $this->provider->execute($command, $error);
         $properties = $this->sessionProperties();
         $array = $this->provider->handle($output, $properties);
-        return ClassFiller::list(SessionEntity::class, $array);
+        return ClassFiller::list(SessionEntity::class, $array, ['provider'=>$this->provider, 'cluster'=>$cluster]);
     }
 
     public function getByAppID(string $appID, ClusterEntity $cluster, InfobaseShortEntity $infobase, &$error = ''): array
@@ -35,6 +35,9 @@ class RacSessionProvider
             if($session->getAppId() == $appID){
                 $array[] = $session;
             }
+        }
+        if(count($array) == 0){
+            $error = 'Сессии не найдены';
         }
         return $array;
     }
@@ -48,6 +51,9 @@ class RacSessionProvider
                 $array[] = $session;
             }
         }
+        if(count($array) == 0){
+            $error = 'Сессии не найдены';
+        }
         return $array;
     }
 
@@ -59,6 +65,9 @@ class RacSessionProvider
             if($session->getHost() == $host){
                 $array[] = $session;
             }
+        }
+        if(count($array) == 0){
+            $error = 'Сессии не найдены';
         }
         return $array;
     }
@@ -84,7 +93,7 @@ class RacSessionProvider
             'session-id'=>fn($i)=>trim($i),
             'infobase'=>fn($i)=>trim($i),
             'connection'=>fn($i)=>trim($i),
-            'process'=>fn($i)=>intval($i),
+            'process'=>fn($i)=>trim($i),
             'user-name'=>fn($i)=>trim($i),
             'host'=>fn($i)=>trim($i),
             'app-id'=>fn($i)=>trim($i),

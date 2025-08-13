@@ -26,7 +26,7 @@ class RacConnectionProvider implements RacConnectionProviderInterface
         $output = $this->provider->execute($command, $error);
         $properties = $this->connectionProperties();
         $array = $this->provider->handle($output, $properties);
-        return ClassFiller::list(ConnectionEntity::class, $array);
+        return ClassFiller::list(ConnectionEntity::class, $array, ['provider'=>$this->provider, 'cluster'=>$cluster,'process'=>$process, 'infobase'=>$infobase]);
     }
 
     public function getByAppID(string $appID, ClusterEntity $cluster, ProcessEntity $process, InfobaseShortEntity $infobase, &$error = ''): array
@@ -37,6 +37,9 @@ class RacConnectionProvider implements RacConnectionProviderInterface
             if($session->getAppId() == $appID){
                 $array[] = $session;
             }
+        }
+        if(count($array) == 0){
+            $error = 'Соединения не найдены';
         }
         return $array;
     }
@@ -50,6 +53,9 @@ class RacConnectionProvider implements RacConnectionProviderInterface
                 $array[] = $session;
             }
         }
+        if(count($array) == 0){
+            $error = 'Соединения не найдены';
+        }
         return $array;
     }
 
@@ -61,6 +67,9 @@ class RacConnectionProvider implements RacConnectionProviderInterface
             if($session->getHost() == $host){
                 $array[] = $session;
             }
+        }
+        if(count($array) == 0){
+            $error = 'Соединения не найдены';
         }
         return $array;
     }

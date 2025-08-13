@@ -35,6 +35,7 @@ class RacServerProvider
         if(count($servers) > 0){
             return $servers[0];
         }
+        $error = 'Сервер не найден';
         return null;
     }
 
@@ -46,6 +47,7 @@ class RacServerProvider
                 return $server;
             }
         }
+        $error = 'Сервер не найден';
         return null;
     }
 

@@ -33,7 +33,7 @@ class ClassFiller
 
     private static function resolveClass(\ReflectionClass $reflection, $properties): object|null
     {
-        $debug = $reflection->getName() == 'RacWorker\Entity\SessionEntity';
+        $debug = $reflection->getName() == 'RacWorker\Entity\ConnectionEntity';
         $constructor = $reflection->getConstructor();
         $className = $reflection->getName();
         if(is_null($constructor)){

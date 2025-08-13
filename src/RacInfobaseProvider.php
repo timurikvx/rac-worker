@@ -37,6 +37,7 @@ class RacInfobaseProvider
                 return $infobase;
             }
         }
+        $error = 'База данных не найдена';
         return null;
     }
 
@@ -46,6 +47,7 @@ class RacInfobaseProvider
         if(count($list) > 0){
             return $list[0];
         }
+        $error = 'База данных не найдена';
         return null;
     }
 
@@ -57,6 +59,7 @@ class RacInfobaseProvider
         $array = $this->provider->handle($output, $properties);
         $infobase = ClassFiller::list(InfobaseEntity::class, $array, ['cluster'=>$cluster]);
         if(count($infobase) == 0){
+            $error = 'База данных не найдена';
             return null;
         }
         return $infobase[0];

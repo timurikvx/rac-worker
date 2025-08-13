@@ -2,12 +2,21 @@
 
 namespace RacWorker\Entity;
 
+use RacWorker\Services\RacProvider;
 use RacWorker\Traits\PropertyFill;
 
 class ConnectionEntity
 {
 
     use PropertyFill;
+
+    private RacProvider $provider;
+
+    private ClusterEntity $cluster;
+
+    private ProcessEntity $process;
+
+    private InfobaseEntity $infobase;
 
     protected string $connection;
 
@@ -84,6 +93,21 @@ class ConnectionEntity
 
     protected string $currentServiceName;
 
+    public function __construct(RacProvider $provider, ClusterEntity $cluster, ProcessEntity $process, InfobaseEntity $infobase)
+    {
+        $this->provider = $provider;
+        $this->cluster = $cluster;
+        $this->process = $process;
+        $this->infobase = $infobase;
+    }
+
+    public function remove(&$error = ''): bool
+    {
+        $infobaseUser = $this->infobase->getInfobaseUser();
+        $command = 'connection '.$this->provider->getHost().' disconnect --cluster='.$this->cluster->uuid().' --process='.$this->process->uuid().' --connection='.$this->uuid().$this->cluster->getAuth().$infobaseUser->getAuth();
+        $this->provider->execute($command, $error);
+        return empty($error);
+    }
 
     protected function set(string $name, $value): void
     {
@@ -95,7 +119,6 @@ class ConnectionEntity
         }
         $this->$name = $value;
     }
-
 
     public function uuid(): string
     {
@@ -111,7 +134,6 @@ class ConnectionEntity
     {
         return $this->userName;
     }
-
 
     public function getHost(): string
     {

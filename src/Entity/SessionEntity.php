@@ -2,12 +2,17 @@
 
 namespace RacWorker\Entity;
 
+use RacWorker\Services\RacProvider;
 use RacWorker\Traits\PropertyFill;
 
 class SessionEntity
 {
 
     use PropertyFill;
+
+    private RacProvider $provider;
+
+    private ClusterEntity $cluster;
 
     protected string $session;
 
@@ -17,7 +22,7 @@ class SessionEntity
 
     protected string $connection;
 
-    protected int $process;
+    protected string $process;
 
     protected string $userName;
 
@@ -101,11 +106,18 @@ class SessionEntity
 
     protected string $clientIp;
 
-    public function __construct()
+    public function __construct(RacProvider $provider, ClusterEntity $cluster)
     {
-
+        $this->provider = $provider;
+        $this->cluster = $cluster;
     }
 
+    public function remove($message = '', &$error = ''): bool
+    {
+        $command = 'session '.$this->provider->getHost().' terminate --cluster='.$this->cluster->uuid().$this->cluster->getAuth().' --session='.$this->uuid().' --error-message="'.$message.'"';
+        $this->provider->execute($command, $error);
+        return empty($error);
+    }
 
     protected function set(string $name, $value): void
     {
@@ -118,9 +130,11 @@ class SessionEntity
         if($name == 'lastActiveAt'){
             $value = new \DateTime($value);
         }
+        if($name == 'hibernate'){
+            $value = ($value == 'yes');
+        }
         $this->$name = $value;
     }
-
 
     public function uuid(): string
     {
