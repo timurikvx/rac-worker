@@ -54,7 +54,9 @@ class RacClusterProvider implements RacClusterProviderInterface
                 return $cluster;
             }
         }
-        $error = 'Кластер не найден';
+        if(empty($error)){
+            $error = 'Кластер не найден';
+        }
         return null;
     }
 
@@ -74,7 +76,9 @@ class RacClusterProvider implements RacClusterProviderInterface
     {
         $clusters = $this->list($error);
         if(count($clusters) === 0) {
-            $error = 'Кластер не найден';
+            if(empty($error)){
+                $error = 'Кластер не найден';
+            }
             return null;
         }
         return $clusters[0];

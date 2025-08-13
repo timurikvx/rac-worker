@@ -39,7 +39,9 @@ class RacConnectionProvider implements RacConnectionProviderInterface
             }
         }
         if(count($array) == 0){
-            $error = 'Соединения не найдены';
+            if(empty($error)){
+                $error = 'Соединения не найдены';
+            }
         }
         return $array;
     }
@@ -54,7 +56,9 @@ class RacConnectionProvider implements RacConnectionProviderInterface
             }
         }
         if(count($array) == 0){
-            $error = 'Соединения не найдены';
+            if(empty($error)){
+                $error = 'Соединения не найдены';
+            }
         }
         return $array;
     }
@@ -69,7 +73,9 @@ class RacConnectionProvider implements RacConnectionProviderInterface
             }
         }
         if(count($array) == 0){
-            $error = 'Соединения не найдены';
+            if(empty($error)){
+                $error = 'Соединения не найдены';
+            }
         }
         return $array;
     }

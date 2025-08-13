@@ -37,7 +37,9 @@ class RacSessionProvider
             }
         }
         if(count($array) == 0){
-            $error = 'Сессии не найдены';
+            if(empty($error)){
+                $error = 'Сессии не найдены';
+            }
         }
         return $array;
     }
@@ -52,7 +54,9 @@ class RacSessionProvider
             }
         }
         if(count($array) == 0){
-            $error = 'Сессии не найдены';
+            if(empty($error)){
+                $error = 'Сессии не найдены';
+            }
         }
         return $array;
     }

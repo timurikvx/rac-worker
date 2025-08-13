@@ -35,7 +35,9 @@ class RacServerProvider
         if(count($servers) > 0){
             return $servers[0];
         }
-        $error = 'Сервер не найден';
+        if(empty($error)){
+            $error = 'Сервер не найден';
+        }
         return null;
     }
 
@@ -47,7 +49,9 @@ class RacServerProvider
                 return $server;
             }
         }
-        $error = 'Сервер не найден';
+        if(empty($error)){
+            $error = 'Сервер не найден';
+        }
         return null;
     }
 
@@ -72,6 +76,9 @@ class RacServerProvider
         $properties = $this->createServerProperties();
         $array = $this->provider->handle($output, $properties);
         if(count($array) === 0){
+            if(empty($error)){
+                $error = 'Ошибка добавление сервера';
+            }
             return null;
         }
         return $array[0]['server'];
